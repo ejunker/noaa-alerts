@@ -5,7 +5,8 @@ module Noaa
   class Client
     attr_reader :alerts
 
-    def initialize(state)
+    def initialize(state, published_since = nil)
+      @published_since = published_since
       @alerts = []
       get_alerts(state)
     end
@@ -21,7 +22,8 @@ module Noaa
     def handle_catalog(catalog)
       entries = catalog['feed']['entry']
       entries = [entries] unless entries.kind_of?(Array)
-      entries.each do |entry| 
+      entries = entries.select{|e| Time.parse(e['published']) > @published_since.to_time} if @published_since
+      entries.each do |entry|
         item = HTTParty.get(entry['id'],
                             format: :xml)['alert']
         alert = Noaa::Alert.new(entry['id'], item)
