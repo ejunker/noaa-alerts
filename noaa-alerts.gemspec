@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Fetch and format feeds from the NOAA.}
   gem.homepage      = "https://github.com/ckundo/noaa-alerts"
 
-  gem.add_dependency("httparty", "~> 0.10.2")
+  gem.add_dependency("httparty", "~> 0.13.0")
 
   gem.add_development_dependency("rake") 
   gem.add_development_dependency("rspec", "~> 2.9.0")
